@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SportVision Analytics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            overflow: hidden;
+            background: #0a0a0a;
+        }
+
+        /* Dynamic Background with Animated Gradient Mesh */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 40%, rgba(236, 72, 153, 0.1) 0%, transparent 40%),
+                linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+        }
+
+        /* Animated Grid Overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 1;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(59, 130, 246, 0.6);
+            border-radius: 50%;
+            animation: float 15s infinite;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+        }
+
+        /* Left Panel - Branding */
+        .brand-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px;
+            position: relative;
+            z-index: 10;
+            color: white;
+        }
+
+        .brand-content {
+            max-width: 500px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon::before {
+            content: '◆';
+            font-size: 24px;
+            color: white;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .headline {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subheadline {
+            font-size: 20px;
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 16px;
+            color: #cbd5e1;
+        }
+
+        .feature-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3b82f6;
+            font-size: 14px;
+        }
+
+        /* Right Panel - Auth Form */
+        .auth-panel {
+            width: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .auth-card {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+        }
+
+        .auth-header {
+            margin-bottom: 32px;
+        }
+
+        .auth-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .auth-header p {
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #334155;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 16px 14px 44px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .input-wrapper input:focus + .input-icon {
+            color: #3b82f6;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #475569;
+            cursor: pointer;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #3b82f6;
+            cursor: pointer;
+        }
+
+        .forgot-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .forgot-link:hover {
+            color: #2563eb;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.5);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e2e8f0;
+        }
+
+        .divider span {
+            padding: 0 16px;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .social-btn:hover {
+            border-color: #cbd5e1;
+            background: #f8fafc;
+            transform: translateY(-1px);
+        }
+
+        .auth-footer {
+            text-align: center;
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        .auth-footer a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .auth-footer a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3b82f6;
+            transition: width 0.3s;
+        }
+
+        .auth-footer a:hover::after {
+            width: 100%;
+        }
+
+        /* Flash Messages */
+        .flash-container {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .flash {
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            animation: slideIn 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .flash-success {
+            background: rgba(34, 197, 94, 0.9);
+            color: white;
+        }
+
+        .flash-error {
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+        }
+
+        .flash-warning {
+            background: rgba(245, 158, 11, 0.9);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .brand-panel {
+                display: none;
+            }
+            .auth-panel {
+                width: 100%;
+                max-width: 480px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .auth-card {
+                padding: 32px 24px;
+                border-radius: 0;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .headline { font-size: 36px; }
+        }
+    </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Background Elements -->
+    <div class="bg-container"></div>
+    <div class="grid-overlay"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Brand Panel -->
+    <div class="brand-panel">
+        <div class="brand-content">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                SportVision
+            </div>
+            <h1 class="headline">Analytics that move with the game</h1>
+            <p class="subheadline">Professional-grade sports analytics platform. Real-time data visualization, performance tracking, and strategic insights for teams that demand excellence.</p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <span>Real-time performance metrics</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <span>Advanced statistical modeling</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <span>Predictive analytics engine</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Panel -->
+    <div class="auth-panel">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2>Welcome back</h2>
+                <p>Sign in to access your analytics dashboard</p>
+            </div>
+            
+            <form method="POST">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                        <span class="input-icon">👤</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <span class="input-icon">🔒</span>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" name="remember">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-link">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="btn-primary">Sign In</button>
+            </form>
+
+            <div class="divider">
+                <span>or continue with</span>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn" type="button">G</button>
+                <button class="social-btn" type="button">⚡</button>
+                <button class="social-btn" type="button">🏢</button>
+            </div>
+            
+            <div class="auth-footer">
+                Don't have an account? <a href="{{ url_for('auth.register') }}">Create account</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Auto-hide flash messages
+        setTimeout(() => {
+            document.querySelectorAll('.flash').forEach(flash => {
+                flash.style.opacity = '0';
+                flash.style.transform = 'translateX(100%)';
+                flash.style.transition = 'all 0.3s ease';
+            });
+        }, 5000);
+    </script>
+</body>
+</html>
