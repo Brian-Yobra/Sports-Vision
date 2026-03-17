@@ -127,8 +127,8 @@
             <h3>No Match Data Available</h3>
             <p>Add matches to see team analytics and performance charts.</p>
             <div class="empty-actions">
-                <a href="{{ url_for('admin') }}" class="btn btn-primary">Add Match</a>
-                <a href="{{ url_for('upload') }}" class="btn btn-secondary">Upload CSV</a>
+                <a href="{{ url_for('admin.index') }}" class="btn btn-primary">Add Match</a>
+                <a href="{{ url_for('upload.index') }}" class="btn btn-secondary">Upload CSV</a>
             </div>
         </div>
     </div>
@@ -144,7 +144,7 @@ const goalsCtx = document.getElementById('goalsChart').getContext('2d');
 new Chart(goalsCtx, {
     type: 'line',
     data: {
-        labels: {{ match_dates | tojson }},
+        labels: {{ match_dates,tojson }}
         datasets: [{
             label: 'Goals Scored',
             data: {{ goals_scored | tojson }},

@@ -18,7 +18,7 @@
                 <h2>&#128228; Upload CSV File</h2>
             </div>
             <div class="card-body">
-                <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data" class="upload-form">
+                <form method="POST" action="{{ url_for('upload.index') }}" enctype="multipart/form-data" class="upload-form">
                     <div class="form-group">
                         <label for="upload_type">Data Type</label>
                         <select name="upload_type" id="upload_type" class="form-control">

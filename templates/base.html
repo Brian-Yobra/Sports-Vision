@@ -20,42 +20,54 @@
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="{{ url_for('dashboard') }}" class="nav-logo">
+            <a href="{{ url_for('main.dashboard') }}" class="nav-logo">
                 <span class="logo-icon">&#9917;</span>
                 <span class="logo-text">SportVision</span>
             </a>
             
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="{{ url_for('dashboard') }}" class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}">
+                    <a href="{{ url_for('main.dashboard') }}" class="nav-link {% if request.endpoint == 'main.dashboard' %}active{% endif %}">
                         Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url_for('players') }}" class="nav-link {% if request.endpoint in ['players', 'player_detail'] %}active{% endif %}">
+                    <a href="{{ url_for('main.players') }}" class="nav-link {% if request.endpoint in ['main.players', 'main.player_detail'] %}active{% endif %}">
                         Players
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url_for('team_analytics') }}" class="nav-link {% if request.endpoint == 'team_analytics' %}active{% endif %}">
+                    <a href="{{ url_for('main.team_analytics') }}" class="nav-link {% if request.endpoint == 'main.team_analytics' %}active{% endif %}">
                         Team Analytics
                     </a>
                 </li>
+                {% if logged_in %}
                 <li class="nav-item">
-                    <a href="{{ url_for('upload') }}" class="nav-link {% if request.endpoint == 'upload' %}active{% endif %}">
+                    <a href="{{ url_for('upload.index') }}" class="nav-link {% if request.endpoint == 'upload.index' %}active{% endif %}">
                         Upload Data
                     </a>
                 </li>
+                {% if is_admin %}
                 <li class="nav-item">
-                    <a href="{{ url_for('predict') }}" class="nav-link {% if request.endpoint == 'predict' %}active{% endif %}">
-                        Predict
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ url_for('admin') }}" class="nav-link {% if request.endpoint == 'admin' %}active{% endif %}">
+                    <a href="{{ url_for('admin.index') }}" class="nav-link {% if request.endpoint == 'admin' %}active{% endif %}">
                         Admin
                     </a>
                 </li>
+                {% endif %}
+                {% endif %}
+                <li class="nav-item">
+                    <a href="{{ url_for('predict.index') }}" class="nav-link {% if request.endpoint == 'predict.index' %}active{% endif %}">
+                        Predict
+                    </a>
+                </li>
+                {% if logged_in %}
+                <li class="nav-item">
+                    <span class="nav-link">Hello, {{ username }}</span>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('auth.logout') }}" class="nav-link">Logout</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </nav>

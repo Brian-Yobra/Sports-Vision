@@ -311,7 +311,7 @@
             </div>
             
             <div class="player-footer">
-                <a href="{{ url_for('player_detail', player_id=player.id) }}" class="btn-block">
+                <a href="{{ url_for('main.player_detail', player_id=player.id) }}" class="btn-block">
                     View Details
                 </a>
             </div>
@@ -325,8 +325,8 @@
             <h3>No Players Found</h3>
             <p>Start building your team by adding players.</p>
             <div class="empty-actions">
-                <a href="{{ url_for('admin') }}" class="btn-primary">Add Player</a>
-                <a href="{{ url_for('upload') }}" class="btn-secondary">Upload CSV</a>
+                <a href="{{ url_for('admin.index') }}" class="btn-primary">Add Player</a>
+                <a href="{{ url_for('upload.index') }}" class="btn-secondary">Upload CSV</a>
             </div>
         </div>
     </div>
