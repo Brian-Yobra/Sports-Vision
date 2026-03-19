@@ -334,12 +334,54 @@ body {
   font-weight: 700;
   font-size: 11px;
   color: #fff;
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+
+.player-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--r-sm);
+  transition: background 0.2s;
+}
+
+.player-chip:hover {
+  background: rgba(255,255,255,0.05);
 }
 
 .player-chip:hover .player-avatar {
   border-color: var(--green);
   background: rgba(0,230,118,0.15);
+  transform: scale(1.05);
+}
+
+.player-chip.selected {
+  background: rgba(0,230,118,0.1);
+}
+
+.player-chip.selected .player-avatar {
+  border-color: var(--green);
+  background: rgba(0,230,118,0.25);
+  box-shadow: 0 0 12px rgba(0,230,118,0.4);
+}
+
+.player-chip.swapping {
+  background: rgba(255,179,0,0.15);
+  animation: pulse-select 0.6s ease-in-out infinite;
+}
+
+.player-chip.swapping .player-avatar {
+  border-color: var(--amber);
+  background: rgba(255,179,0,0.25);
+  box-shadow: 0 0 12px rgba(255,179,0,0.5);
+}
+
+@keyframes pulse-select {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 
 .player-chip-name {
@@ -458,6 +500,219 @@ body {
   font-family: var(--font-mono);
   font-size: 10px;
   color: var(--green);
+}
+
+/* ─── Selection Counter ─────────────────────────────────────────── */
+.selection-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.selection-counter {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.sel-count {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.sel-count .num {
+  font-weight: 700;
+  font-family: var(--font-display);
+}
+
+.sel-count.gk { color: var(--green); }
+.sel-count.def { color: var(--blue); }
+.sel-count.mid { color: var(--amber); }
+.sel-count.fwd { color: var(--red); }
+
+.sel-count .filled { color: var(--green); }
+.sel-count .total { color: var(--muted); }
+
+.selection-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-swap {
+  padding: 8px 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-swap:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.btn-swap.active {
+  background: rgba(255,179,0,0.15);
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.btn-reset {
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-reset:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.total-selected {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: #fff;
+}
+
+.total-selected.complete {
+  color: var(--green);
+}
+
+.formation-badge {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.05em;
+  z-index: 3;
+}
+
+/* ─── Squad Pool ───────────────────────────────────────────────── */
+.squad-pool {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.pool-group {
+  margin-bottom: 8px;
+}
+
+.pool-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 6px;
+  padding-left: 4px;
+}
+
+.pool-players {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pool-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 11px;
+}
+
+.pool-chip:hover {
+  border-color: var(--border2);
+  background: var(--faint);
+}
+
+.pool-chip.selected {
+  background: rgba(0,230,118,0.1);
+  border-color: var(--green);
+}
+
+.pool-chip .avatar-sm {
+  width: 22px;
+  height: 22px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 9px;
+  color: #fff;
+}
+
+.pool-chip.selected .avatar-sm {
+  background: rgba(0,230,118,0.25);
+  border: 1px solid var(--green);
+}
+
+.pool-chip .player-stat {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--muted);
+}
+
+/* ─── Two-column layout for selection ─────────────────────────── */
+.sv-cols-tactical {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
+  margin-bottom: 16px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .sv-cols-tactical {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Empty Slots ─────────────────────────────────────────────── */
+.empty-slot {
+  width: 36px;
+  height: 36px;
+  border: 2px dashed rgba(255,255,255,0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.2);
+  font-size: 14px;
 }
 
 /* ─── Squad Bar ──────────────────────────────────────────────────── */
@@ -793,30 +1048,61 @@ body {
 
   {% if formation_stats and formation_stats.formations and squad %}
 
-  <!-- ── Formation + Subs ── -->
+  <!-- ── Formation + Squad Selection ── -->
   <div class="sv-section-label">Tactical Setup</div>
   
+  <!-- Selection Counter & Actions -->
+  <div class="selection-bar">
+    <div class="selection-counter">
+      <div class="sel-count gk">
+        <span>GK:</span>
+        <span class="num" id="gkCount">1</span>/<span class="total">1</span>
+      </div>
+      <div class="sel-count def">
+        <span>DEF:</span>
+        <span class="num" id="defCount">0</span>/<span class="total" id="defTotal">4</span>
+      </div>
+      <div class="sel-count mid">
+        <span>MID:</span>
+        <span class="num" id="midCount">0</span>/<span class="total" id="midTotal">3</span>
+      </div>
+      <div class="sel-count fwd">
+        <span>FWD:</span>
+        <span class="num" id="fwdCount">0</span>/<span class="total" id="fwdTotal">3</span>
+      </div>
+    </div>
+    <div class="total-selected" id="totalSelected">
+      <span id="selectedCount">0</span>/11 Selected
+    </div>
+    <div class="selection-actions">
+      <button class="btn-swap" id="swapBtn" onclick="toggleSwapMode()">
+        <span id="swapBtnText">Enable Swap</span>
+      </button>
+      <button class="btn-reset" onclick="resetSelection()">Reset</button>
+    </div>
+  </div>
+
   <!-- Formation Selector -->
-  <div style="margin-bottom: 20px; display: flex; align-items: center; gap: 16px;">
+  <div style="margin-bottom: 20px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
     <label style="font-family: var(--font-mono); font-size: 12px; color: var(--muted); text-transform: uppercase;">Formation:</label>
     <select id="formationSelect" onchange="updateFormation()" style="padding: 10px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); color: var(--text); font-family: var(--font-display); font-weight: 600; font-size: 14px; cursor: pointer;">
       {% for formation in formation_stats.formations %}
       <option value="{{ formation.name }}" {% if loop.index == 1 %}selected{% endif %}>{{ formation.name }}</option>
       {% endfor %}
     </select>
+    <span id="formationHint" style="font-family: var(--font-mono); font-size: 11px; color: var(--muted);"></span>
   </div>
 
-  <div class="sv-cols">
+  <div class="sv-cols-tactical">
 
     <!-- Pitch -->
     <div class="sv-card">
       <div class="sv-card-hdr">
         <span class="sv-card-title">Starting XI</span>
-        <span class="sv-card-tag">{{ squad.formation }}</span>
+        <span class="sv-card-tag" id="formationBadge">4-3-3</span>
       </div>
       <div class="sv-card-body">
         <div class="pitch-wrap">
-          <div class="formation-badge" id="formationBadge">{{ squad.formation }}</div>
           <div class="pitch-lines">
             <svg viewBox="0 0 100 100" preserveAspectRatio="none" fill="none">
               <rect x="1" y="1" width="98" height="98" rx="2" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>
@@ -830,96 +1116,38 @@ body {
             </svg>
           </div>
           <div class="pitch-rows">
-            <div class="pitch-row" id="forwardsRow">
-              {% for player in squad.forwards %}
-              <div class="player-chip">
-                <div class="player-avatar">{{ player.name[0] }}</div>
-                <div class="player-chip-name">{{ player.name }}</div>
-                {% if player.goals > 0 %}<div class="player-chip-stat">{{ player.goals }}g</div>{% endif %}
-              </div>
-              {% endfor %}
-            </div>
-            <div class="pitch-row" id="midfieldersRow">
-              {% for player in squad.midfielders %}
-              <div class="player-chip">
-                <div class="player-avatar">{{ player.name[0] }}</div>
-                <div class="player-chip-name">{{ player.name }}</div>
-                {% if player.goals > 0 %}<div class="player-chip-stat">{{ player.goals }}g</div>{% endif %}
-              </div>
-              {% endfor %}
-            </div>
-            <div class="pitch-row" id="defendersRow">
-              {% for player in squad.defenders %}
-              <div class="player-chip">
-                <div class="player-avatar">{{ player.name[0] }}</div>
-                <div class="player-chip-name">{{ player.name }}</div>
-                {% if player.goals > 0 %}<div class="player-chip-stat">{{ player.goals }}g</div>{% endif %}
-              </div>
-              {% endfor %}
-            </div>
-            <div class="pitch-row" id="goalkeeperRow">
-              {% if squad.goalkeeper %}
-              <div class="player-chip">
-                <div class="player-avatar" style="border-color: var(--amber); background: rgba(255,179,0,0.12);">
-                  {{ squad.goalkeeper.name[0] }}
-                </div>
-                <div class="player-chip-name">{{ squad.goalkeeper.name }}</div>
-                <div class="player-chip-stat" style="color: var(--amber);">GK</div>
-              </div>
-              {% endif %}
-            </div>
+            <div class="pitch-row" id="forwardsRow"></div>
+            <div class="pitch-row" id="midfieldersRow"></div>
+            <div class="pitch-row" id="defendersRow"></div>
+            <div class="pitch-row" id="goalkeeperRow"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Right column -->
-    <div>
-      <div class="sv-card">
-        <div class="sv-card-hdr">
-          <span class="sv-card-title">Substitutes</span>
-          <span class="sv-card-tag">Bench</span>
-        </div>
-        <div class="sv-card-body" style="padding: 0;">
-          <table class="subs-table">
-            <thead>
-              <tr>
-                <th style="padding-left: 14px;">Pos</th>
-                <th>Player</th>
-                <th style="text-align:right; padding-right:14px;">G</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for p in squad.substitutes.Goalkeeper %}
-              <tr><td><span class="pos-badge pos-gk">GK</span></td><td>{{ p.name }}</td><td class="td-goals">{{ p.goals }}</td></tr>
-              {% endfor %}
-              {% for p in squad.substitutes.Defenders %}
-              <tr><td><span class="pos-badge pos-def">DEF</span></td><td>{{ p.name }}</td><td class="td-goals">{{ p.goals }}</td></tr>
-              {% endfor %}
-              {% for p in squad.substitutes.Midfielders %}
-              <tr><td><span class="pos-badge pos-mid">MID</span></td><td>{{ p.name }}</td><td class="td-goals">{{ p.goals }}</td></tr>
-              {% endfor %}
-              {% for p in squad.substitutes.Forwards %}
-              <tr><td><span class="pos-badge pos-fwd">FWD</span></td><td>{{ p.name }}</td><td class="td-goals">{{ p.goals }}</td></tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+    <!-- Squad Pool -->
+    <div class="sv-card">
+      <div class="sv-card-hdr">
+        <span class="sv-card-title">Squad Pool</span>
+        <span class="sv-card-tag">Click to select</span>
       </div>
-
-      <div class="sv-card">
-        <div class="sv-card-hdr">
-          <span class="sv-card-title">Formation Options</span>
-        </div>
-        <div class="sv-card-body">
-          <div class="formation-options">
-            {% for formation in formation_stats.formations %}
-            <div class="formation-opt">
-              <div class="fo-name">{{ formation.name }}</div>
-              <div class="fo-desc">{{ formation.description }}</div>
-              <div class="fo-best">{{ formation.best_for }}</div>
-            </div>
-            {% endfor %}
+      <div class="sv-card-body" style="padding: 12px;">
+        <div class="squad-pool">
+          <div class="pool-group">
+            <div class="pool-label">Goalkeeper</div>
+            <div class="pool-players" id="poolGoalkeeper"></div>
+          </div>
+          <div class="pool-group">
+            <div class="pool-label">Defenders</div>
+            <div class="pool-players" id="poolDefenders"></div>
+          </div>
+          <div class="pool-group">
+            <div class="pool-label">Midfielders</div>
+            <div class="pool-players" id="poolMidfielders"></div>
+          </div>
+          <div class="pool-group">
+            <div class="pool-label">Forwards</div>
+            <div class="pool-players" id="poolForwards"></div>
           </div>
         </div>
       </div>
@@ -1196,15 +1424,32 @@ new Chart(possCtx, {
   }
 });
 
-/* Formation Selection */
-const allPlayers = {
-  goalkeeper: {{ squad.goalkeeper | tojson }},
-  defenders: {{ squad.defenders | tojson }},
-  midfielders: {{ squad.midfielders | tojson }},
-  forwards: {{ squad.forwards | tojson }},
-  substitutes: {{ squad.substitutes | tojson }}
+/* ─── Interactive Squad Selection ─────────────────────────────────── */
+
+// All players from database
+const allPlayersData = {
+  goalkeeper: {{ (([squad.goalkeeper] if squad.goalkeeper else []) + squad.substitutes.Goalkeeper) | tojson }},
+  defenders: {{ (squad.defenders + squad.substitutes.Defenders) | tojson }},
+  midfielders: {{ (squad.midfielders + squad.substitutes.Midfielders) | tojson }},
+  forwards: {{ (squad.forwards + squad.substitutes.Forwards) | tojson }}
 };
 
+// Combine all players into one array with position info
+let players = [
+  ...allPlayersData.goalkeeper.map(p => ({...p, posType: 'gk'})),
+  ...allPlayersData.defenders.map(p => ({...p, posType: 'def'})),
+  ...allPlayersData.midfielders.map(p => ({...p, posType: 'mid'})),
+  ...allPlayersData.forwards.map(p => ({...p, posType: 'fwd'}))
+];
+
+// Selected players on pitch (by player id)
+let selectedPlayers = new Set();
+
+// Swap mode
+let swapMode = false;
+let swapSourcePlayer = null;
+
+// Formation configurations
 const formations = {
   '4-3-3': { defenders: 4, midfielders: 3, forwards: 3 },
   '4-4-2': { defenders: 4, midfielders: 4, forwards: 2 },
@@ -1215,35 +1460,274 @@ const formations = {
   '4-1-4-1': { defenders: 4, midfielders: 5, forwards: 1 }
 };
 
+// Initialize
+function initSelection() {
+  renderPool();
+  updateFormation();
+}
+
+// Render squad pool
+function renderPool() {
+  const positions = ['goalkeeper', 'defenders', 'midfielders', 'forwards'];
+  const posNames = ['poolGoalkeeper', 'poolDefenders', 'poolMidfielders', 'poolForwards'];
+  
+  positions.forEach((pos, idx) => {
+    const container = document.getElementById(posNames[idx]);
+    container.innerHTML = allPlayersData[pos].map(p => `
+      <div class="pool-chip ${selectedPlayers.has(p.id) ? 'selected' : ''}" 
+           onclick="handlePoolClick(${p.id}, '${p.posType}')" 
+           data-id="${p.id}">
+        <div class="avatar-sm">${p.name[0]}</div>
+        <span>${p.name}</span>
+        <span class="player-stat">${p.goals || 0}g</span>
+      </div>
+    `).join('');
+  });
+}
+
+// Handle pool player click
+function handlePoolClick(playerId, posType) {
+  const player = players.find(p => p.id === playerId);
+  if (!player) return;
+
+  if (swapMode) {
+    handleSwap(player);
+    return;
+  }
+
+  if (selectedPlayers.has(playerId)) {
+    // Deselect
+    selectedPlayers.delete(playerId);
+  } else {
+    // Select if not full for position
+    const fmt = formations[document.getElementById('formationSelect').value];
+    const currentCount = getPositionCount(posType);
+    const maxForPos = posType === 'gk' ? 1 : (posType === 'def' ? fmt.defenders : (posType === 'mid' ? fmt.midfielders : fmt.forwards));
+    
+    if (currentCount < maxForPos) {
+      selectedPlayers.add(playerId);
+    } else {
+      // Position full, don't select
+      return;
+    }
+  }
+  
+  renderPool();
+  updatePitch();
+  updateCounter();
+}
+
+// Handle swap
+function handleSwap(player) {
+  if (!swapSourcePlayer) {
+    // First click - select source
+    swapSourcePlayer = player;
+    document.querySelectorAll('.pool-chip').forEach(chip => {
+      if (parseInt(chip.dataset.id) === player.id) {
+        chip.classList.add('swapping');
+      }
+    });
+  } else {
+    // Second click - perform swap
+    if (swapSourcePlayer.id !== player.id) {
+      if (selectedPlayers.has(swapSourcePlayer.id)) {
+        selectedPlayers.delete(swapSourcePlayer.id);
+        selectedPlayers.add(player.id);
+      }
+    }
+    
+    // Clear swap state
+    swapSourcePlayer = null;
+    swapMode = false;
+    document.getElementById('swapBtn').classList.remove('active');
+    document.getElementById('swapBtnText').textContent = 'Enable Swap';
+    
+    renderPool();
+    updatePitch();
+    updateCounter();
+  }
+}
+
+// Toggle swap mode
+function toggleSwapMode() {
+  swapMode = !swapMode;
+  swapSourcePlayer = null;
+  const btn = document.getElementById('swapBtn');
+  const btnText = document.getElementById('swapBtnText');
+  
+  if (swapMode) {
+    btn.classList.add('active');
+    btnText.textContent = 'Cancel Swap';
+  } else {
+    btn.classList.remove('active');
+    btnText.textContent = 'Enable Swap';
+  }
+  
+  renderPool();
+}
+
+// Get count of players in a position on pitch
+function getPositionCount(posType) {
+  let count = 0;
+  selectedPlayers.forEach(id => {
+    const player = players.find(p => p.id === id);
+    if (player && player.posType === posType) count++;
+  });
+  return count;
+}
+
+// Update pitch display
+function updatePitch() {
+  const fmt = formations[document.getElementById('formationSelect').value];
+  
+  // Get selected players by position
+  const gkPlayers = players.filter(p => selectedPlayers.has(p.id) && p.posType === 'gk');
+  const defPlayers = players.filter(p => selectedPlayers.has(p.id) && p.posType === 'def');
+  const midPlayers = players.filter(p => selectedPlayers.has(p.id) && p.posType === 'mid');
+  const fwdPlayers = players.filter(p => selectedPlayers.has(p.id) && p.posType === 'fwd');
+  
+  // Render goalkeeper
+  document.getElementById('goalkeeperRow').innerHTML = gkPlayers.length > 0 
+    ? gkPlayers.map(p => createPlayerChip(p, true)).join('')
+    : '<div class="empty-slot">+</div>';
+  
+  // Render defenders
+  document.getElementById('defendersRow').innerHTML = renderPositionRow(defPlayers, fmt.defenders);
+  
+  // Render midfielders
+  document.getElementById('midfieldersRow').innerHTML = renderPositionRow(midPlayers, fmt.midfielders);
+  
+  // Render forwards
+  document.getElementById('forwardsRow').innerHTML = renderPositionRow(fwdPlayers, fmt.forwards);
+}
+
+// Render position row with empty slots
+function renderPositionRow(playerList, maxCount) {
+  let html = playerList.map(p => createPlayerChip(p, false)).join('');
+  
+  // Add empty slots
+  const emptySlots = maxCount - playerList.length;
+  for (let i = 0; i < emptySlots; i++) {
+    html += '<div class="empty-slot">+</div>';
+  }
+  return html;
+}
+
+// Create player chip HTML
+function createPlayerChip(player, isGK) {
+  const isSelected = selectedPlayers.has(player.id);
+  return `
+    <div class="player-chip ${isSelected ? 'selected' : ''}" 
+         onclick="handlePitchClick(${player.id}, '${player.posType}')"
+         data-id="${player.id}">
+      <div class="player-avatar" ${isGK ? 'style="border-color: var(--amber); background: rgba(255,179,0,0.12);"' : ''}>
+        ${player.name[0]}
+      </div>
+      <div class="player-chip-name">${player.name}</div>
+      ${player.goals > 0 ? `<div class="player-chip-stat">${player.goals}g</div>` : ''}
+    </div>
+  `;
+}
+
+// Handle pitch player click
+function handlePitchClick(playerId, posType) {
+  if (swapMode) {
+    const player = players.find(p => p.id === playerId);
+    handleSwap(player);
+    return;
+  }
+  
+  // Deselect player on pitch click
+  if (selectedPlayers.has(playerId)) {
+    selectedPlayers.delete(playerId);
+    renderPool();
+    updatePitch();
+    updateCounter();
+  }
+}
+
+// Update selection counter
+function updateCounter() {
+  const fmt = formations[document.getElementById('formationSelect').value];
+  
+  const gkCount = getPositionCount('gk');
+  const defCount = getPositionCount('def');
+  const midCount = getPositionCount('mid');
+  const fwdCount = getPositionCount('fwd');
+  
+  document.getElementById('gkCount').textContent = gkCount;
+  document.getElementById('defCount').textContent = defCount;
+  document.getElementById('midCount').textContent = midCount;
+  document.getElementById('fwdCount').textContent = fwdCount;
+  
+  document.getElementById('defTotal').textContent = fmt.defenders;
+  document.getElementById('midTotal').textContent = fmt.midfielders;
+  document.getElementById('fwdTotal').textContent = fmt.forwards;
+  
+  const total = selectedPlayers.size;
+  document.getElementById('selectedCount').textContent = total;
+  
+  const totalEl = document.getElementById('totalSelected');
+  if (total === 11 && gkCount === 1) {
+    totalEl.classList.add('complete');
+    totalEl.innerHTML = '<span id="selectedCount">11</span>/11 Complete!';
+  } else {
+    totalEl.classList.remove('complete');
+  }
+}
+
+// Update formation
 function updateFormation() {
   const selected = document.getElementById('formationSelect').value;
   const fmt = formations[selected] || { defenders: 4, midfielders: 4, forwards: 2 };
   
-  // Update badge
   document.getElementById('formationBadge').textContent = selected;
   
-  // Get players based on formation
-  const defs = allPlayers.defenders.slice(0, fmt.defenders);
-  const mids = allPlayers.midfielders.slice(0, fmt.midfielders);
-  const fwd = allPlayers.forwards.slice(0, fmt.forwards);
+  // Check if current selection fits new formation
+  const gkCount = getPositionCount('gk');
+  const defCount = getPositionCount('def');
+  const midCount = getPositionCount('mid');
+  const fwdCount = getPositionCount('fwd');
   
-  // Update pitch display
-  document.getElementById('forwardsRow').innerHTML = fwd.map((p, i) => 
-    `<div class="player-chip"><div class="player-avatar">${p.name[0]}</div><div class="player-chip-name">${p.name}</div>${p.goals > 0 ? `<div class="player-chip-stat">${p.goals}g</div>` : ''}</div>`
-  ).join('');
+  // Show hint
+  const hint = document.getElementById('formationHint');
+  if (defCount > fmt.defenders || midCount > fmt.midfielders || fwdCount > fmt.forwards) {
+    hint.textContent = `⚠️ Too many players for ${selected}. Remove excess players.`;
+    hint.style.color = 'var(--red)';
+  } else {
+    hint.textContent = '';
+  }
   
-  document.getElementById('midfieldersRow').innerHTML = mids.map((p, i) => 
-    `<div class="player-chip"><div class="player-avatar">${p.name[0]}</div><div class="player-chip-name">${p.name}</div>${p.goals > 0 ? `<div class="player-chip-stat">${p.goals}g</div>` : ''}</div>`
-  ).join('');
-  
-  document.getElementById('defendersRow').innerHTML = defs.map((p, i) => 
-    `<div class="player-chip"><div class="player-avatar">${p.name[0]}</div><div class="player-chip-name">${p.name}</div>${p.goals > 0 ? `<div class="player-chip-stat">${p.goals}g</div>` : ''}</div>`
-  ).join('');
-  
-  const gk = allPlayers.goalkeeper;
-  document.getElementById('goalkeeperRow').innerHTML = gk ? 
-    `<div class="player-chip"><div class="player-avatar" style="border-color: var(--amber); background: rgba(255,179,0,0.12);">${gk.name[0]}</div><div class="player-chip-name">${gk.name}</div><div class="player-chip-stat" style="color: var(--amber);">GK</div></div>` : '';
+  updateCounter();
+  updatePitch();
+  renderPool();
 }
+
+// Reset selection
+function resetSelection() {
+  selectedPlayers.clear();
+  swapMode = false;
+  swapSourcePlayer = null;
+  document.getElementById('swapBtn').classList.remove('active');
+  document.getElementById('swapBtnText').textContent = 'Enable Swap';
+  
+  // Auto-select first player of each position
+  if (allPlayersData.goalkeeper.length > 0) {
+    selectedPlayers.add(allPlayersData.goalkeeper[0].id);
+  }
+  
+  const fmt = formations[document.getElementById('formationSelect').value];
+  allPlayersData.defenders.slice(0, fmt.defenders).forEach(p => selectedPlayers.add(p.id));
+  allPlayersData.midfielders.slice(0, fmt.midfielders).forEach(p => selectedPlayers.add(p.id));
+  allPlayersData.forwards.slice(0, fmt.forwards).forEach(p => selectedPlayers.add(p.id));
+  
+  renderPool();
+  updatePitch();
+  updateCounter();
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', initSelection);
 </script>
 {% endif %}
 {% endblock %}
