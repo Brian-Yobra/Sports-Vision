@@ -5,12 +5,16 @@
 {% block content %}
 <div class="container">
     <!-- Back Button -->
-    <a href="{{ url_for('players') }}" class="back-link">&larr; Back to Players</a>
+    <a href="{{ url_for('players.players') }}" class="back-link">&larr; Back to Players</a>
     
     <!-- Player Header -->
     <div class="player-profile-header">
         <div class="player-avatar-large">
+            {% if player.image %}
+            <img src="{{ player.image }}" alt="{{ player.name }}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+            {% else %}
             {{ player.name[0] }}
+            {% endif %}
         </div>
         <div class="player-profile-info">
             <h1>{{ player.name }}</h1>
@@ -122,6 +126,39 @@
     {% else %}
     <div class="empty-state">
         <p>No statistics available for this player yet.</p>
+    </div>
+    {% endif %}
+
+    <!-- Team History -->
+    {% if teams_history %}
+    <div class="dashboard-card" style="margin-top: 2rem;">
+        <div class="card-header">
+            <h2>&#127981; Team History</h2>
+        </div>
+        <div class="card-body">
+            <div class="teams-list">
+                {% for th in teams_history %}
+                <div class="team-item-compact" style="display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f1f5f9; background: white; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                    {% if th.logo %}
+                    <img src="{{ th.logo }}" style="width: 50px; height: 50px; border-radius: 50%; object-fit: contain; margin-right: 15px; border: 1px solid #e2e8f0; padding: 2px;">
+                    {% else %}
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin-right: 15px;">
+                        {{ th.name[0] }}
+                    </div>
+                    {% endif %}
+                    <div style="flex-grow: 1;">
+                        <div style="font-weight: 600; font-size: 1.1rem; color: #1e293b;">{{ th.name }} {% if th.is_current %}<span class="badge badge-position" style="font-size: 0.7em; margin-left: 8px;">Current</span>{% endif %}</div>
+                        <div style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">
+                            {{ th.start_date or 'Unknown' }} - {{ th.end_date or ('Present' if th.is_current else 'Unknown') }}
+                        </div>
+                    </div>
+                    <div>
+                        <a href="{{ url_for('teams.team_detail', team_id=th.id) }}" class="btn-sm" style="text-decoration: none; background: #f8fafc; padding: 8px 16px; border-radius: 6px; color: #475569; font-size: 0.9em; font-weight: 500; border: 1px solid #e2e8f0; transition: all 0.2s;">View Team</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
     {% endif %}
 

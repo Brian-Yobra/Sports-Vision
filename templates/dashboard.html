@@ -399,7 +399,7 @@
         <div class="dashboard-card">
             <div class="card-header">
                 <h2>&#127942; Top Scorers</h2>
-                <a href="{{ url_for('players') }}" class="btn btn-sm">View All</a>
+                <a href="{{ url_for('players.players') }}" class="btn btn-sm">View All</a>
             </div>
             <div class="card-body">
                 {% if top_scorers %}
@@ -426,7 +426,7 @@
                 {% else %}
                 <div class="empty-state">
                     <p>No goal data available yet.</p>
-                    <a href="{{ url_for('upload') }}" class="btn">Upload Data</a>
+                    <a href="{{ url_for('upload.upload') }}" class="btn">Upload Data</a>
                 </div>
                 {% endif %}
             </div>
@@ -436,7 +436,7 @@
         <div class="dashboard-card">
             <div class="card-header">
                 <h2>&#128197; Recent Matches</h2>
-                <a href="{{ url_for('team_analytics') }}" class="btn btn-sm">View All</a>
+                <a href="{{ url_for('teams.team_analytics') }}" class="btn btn-sm">View All</a>
             </div>
             <div class="card-body">
                 {% if recent_matches %}
@@ -459,7 +459,7 @@
                 {% else %}
                 <div class="empty-state">
                     <p>No matches recorded yet.</p>
-                    <a href="{{ url_for('admin') }}" class="btn">Add Match</a>
+                    <a href="{{ url_for('admin.admin') }}" class="btn">Add Match</a>
                 </div>
                 {% endif %}
             </div>
@@ -528,19 +528,19 @@
     <div class="quick-actions">
         <h3>Quick Actions</h3>
         <div class="action-buttons">
-            <a href="{{ url_for('admin') }}" class="action-btn">
+            <a href="{{ url_for('admin.admin') }}" class="action-btn">
                 <span class="action-icon">&#10133;</span>
                 <span>Add Player</span>
             </a>
-            <a href="{{ url_for('admin') }}" class="action-btn">
+            <a href="{{ url_for('admin.admin') }}" class="action-btn">
                 <span class="action-icon">&#9917;</span>
                 <span>Add Match</span>
             </a>
-            <a href="{{ url_for('upload') }}" class="action-btn">
+            <a href="{{ url_for('upload.upload') }}" class="action-btn">
                 <span class="action-icon">&#128228;</span>
                 <span>Upload CSV</span>
             </a>
-            <a href="{{ url_for('predict') }}" class="action-btn">
+            <a href="{{ url_for('ml.predict') }}" class="action-btn">
                 <span class="action-icon">&#128302;</span>
                 <span>Predict Match</span>
             </a>

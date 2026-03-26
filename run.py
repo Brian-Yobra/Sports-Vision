@@ -14,7 +14,8 @@ if not os.path.exists('app.py'):
     sys.exit(1)
 
 # Import and run the app
-from app import app, init_database, DATABASE
+from app import app
+from core.db import init_database, DATABASE
 
 # Initialize database if it doesn't exist
 if not os.path.exists(DATABASE):

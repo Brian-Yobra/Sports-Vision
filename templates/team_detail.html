@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}{{ team.name }} - Team Profile{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Back Button -->
+    <a href="{{ url_for('teams.teams') }}" class="back-link">&larr; Back to Teams</a>
+    
+    <!-- Team Header -->
+    <div class="player-profile-header" style="background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 2rem; display: flex; align-items: center; gap: 2rem;">
+        <div style="width: 120px; height: 120px; border-radius: 50%; background: #f8fafc; display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: bold; color: #3b82f6; border: 3px solid #e2e8f0; flex-shrink: 0; overflow: hidden;">
+            {% if team.logo %}
+            <img src="{{ team.logo }}" alt="{{ team.name }} Logo" style="width: 100%; height: 100%; object-fit: contain; padding: 10px; background: white;">
+            {% else %}
+            {{ team.name[0] }}
+            {% endif %}
+        </div>
+        <div>
+            <h1 style="margin: 0 0 0.5rem 0; font-size: 2.5rem; color: #1e293b;">{{ team.name }}</h1>
+            <div style="display: flex; gap: 1rem; color: #64748b;">
+                {% if team.country %}
+                <span style="display: flex; align-items: center; gap: 0.5rem;">
+                    &#127758; {{ team.country }}
+                </span>
+                {% endif %}
+                {% if team.league %}
+                <span style="display: flex; align-items: center; gap: 0.5rem;">
+                    &#127942; {{ team.league }}
+                </span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Roster -->
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h2>&#128101; Team Roster</h2>
+        </div>
+        <div class="card-body">
+            {% if players %}
+            <div class="players-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
+                {% for p in players %}
+                <a href="{{ url_for('players.player_detail', player_id=p.id) }}" class="player-card" style="display: flex; align-items: center; text-decoration: none; color: inherit; background: #f8fafc; padding: 1rem; border-radius: 8px; transition: transform 0.2s; border: 1px solid #e2e8f0;">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; background: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 1rem; overflow: hidden;">
+                        {% if p.image %}
+                        <img src="{{ p.image }}" alt="{{ p.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% else %}
+                        {{ p.name[0] }}
+                        {% endif %}
+                    </div>
+                    <div style="flex-grow: 1;">
+                        <div style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.2rem;">{{ p.name }}</div>
+                        <div style="font-size: 0.85rem; color: #64748b; display: flex; gap: 0.5rem;">
+                            <span>{{ p.position }}</span>
+                            {% if p.jersey_number %}<span>| #{{ p.jersey_number }}</span>{% endif %}
+                        </div>
+                    </div>
+                    {% if not p.is_current %}
+                    <div style="font-size: 0.8rem; color: #94a3b8; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px;">
+                        Past
+                    </div>
+                    {% endif %}
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <p>No players are currently associated with this team.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

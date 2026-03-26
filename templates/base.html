@@ -20,39 +20,44 @@
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="{{ url_for('dashboard') }}" class="nav-logo">
+            <a href="{{ url_for('main.dashboard') }}" class="nav-logo">
                 <span class="logo-icon">&#9917;</span>
                 <span class="logo-text">SportVision</span>
             </a>
             
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="{{ url_for('dashboard') }}" class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}">
+                    <a href="{{ url_for('main.dashboard') }}" class="nav-link {% if request.endpoint == 'main.dashboard' %}active{% endif %}">
                         Dashboard
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url_for('players') }}" class="nav-link {% if request.endpoint in ['players', 'player_detail'] %}active{% endif %}">
+                    <a href="{{ url_for('players.players') }}" class="nav-link {% if request.endpoint in ['players.players', 'players.player_detail'] %}active{% endif %}">
                         Players
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url_for('team_analytics') }}" class="nav-link {% if request.endpoint == 'team_analytics' %}active{% endif %}">
+                    <a href="{{ url_for('teams.teams') }}" class="nav-link {% if request.endpoint in ['teams.teams', 'teams.team_detail'] %}active{% endif %}">
+                        Teams
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('teams.team_analytics') }}" class="nav-link {% if request.endpoint == 'teams.team_analytics' %}active{% endif %}">
                         Team Analytics
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url_for('upload') }}" class="nav-link {% if request.endpoint == 'upload' %}active{% endif %}">
+                    <a href="{{ url_for('upload.upload') }}" class="nav-link {% if request.endpoint == 'upload.upload' %}active{% endif %}">
                         Upload Data
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url_for('predict') }}" class="nav-link {% if request.endpoint == 'predict' %}active{% endif %}">
+                    <a href="{{ url_for('ml.predict') }}" class="nav-link {% if request.endpoint == 'ml.predict' %}active{% endif %}">
                         Predict
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url_for('admin') }}" class="nav-link {% if request.endpoint == 'admin' %}active{% endif %}">
+                    <a href="{{ url_for('admin.admin') }}" class="nav-link {% if request.endpoint == 'admin.admin' %}active{% endif %}">
                         Admin
                     </a>
                 </li>

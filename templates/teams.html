@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Teams - SportVision Analytics{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h1>All Teams</h1>
+    </div>
+
+    {% if teams %}
+    <div class="teams-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+        {% for team in teams %}
+        <a href="{{ url_for('teams.team_detail', team_id=team.id) }}" class="team-card" style="display: block; text-decoration: none; color: inherit; background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; text-align: center;">
+            <div style="width: 80px; height: 80px; margin: 0 auto 1rem; border-radius: 50%; overflow: hidden; background-color: #f3f4f6; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: #3b82f6; border: 2px solid #e5e7eb;">
+                {% if team.logo %}
+                <img src="{{ team.logo }}" alt="{{ team.name }} Logo" style="width: 100%; height: 100%; object-fit: contain; padding: 5px; background: white;">
+                {% else %}
+                {{ team.name[0] }}
+                {% endif %}
+            </div>
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.25rem;">{{ team.name }}</h3>
+            <div style="color: #64748b; font-size: 0.9rem;">
+                {% if team.country %}<span style="margin-right: 8px;">&#127758; {{ team.country }}</span>{% endif %}
+                {% if team.league %}<span>&#127942; {{ team.league }}</span>{% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>No teams available.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
